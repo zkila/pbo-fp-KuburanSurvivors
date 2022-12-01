@@ -49,7 +49,9 @@ public class Player extends Entity{
 		try {
 			
 			left = ImageIO.read(getClass().getResourceAsStream("/player/Tukanggali_left.png"));
+			left1 = ImageIO.read(getClass().getResourceAsStream("/player/Tukanggali_left_1.png"));
 			right = ImageIO.read(getClass().getResourceAsStream("/player/Tukanggali_right.png"));
+			right1 = ImageIO.read(getClass().getResourceAsStream("/player/Tukanggali_right_1.png"));
 			
 		}catch(IOException e) {
 			e.printStackTrace();
@@ -92,6 +94,17 @@ public class Player extends Entity{
 			direction = "right";
 			worldX += speed;
 		}
+		
+		spriteCounter++;
+		if(spriteCounter > 0) {
+			if(spriteNum == 1) {
+				spriteNum = 2;
+			}
+			else if(spriteNum == 2) {
+				spriteNum = 1;
+			}
+			spriteCounter = 0;
+		}
 	}
 	
 	public void draw (Graphics2D g2) {
@@ -100,10 +113,21 @@ public class Player extends Entity{
 		BufferedImage image = null;
 		
 		if(direction == "left") {
-			image = left;
+			if(spriteNum == 1) {
+				image = left;
+			}
+			if (spriteNum == 2) {
+				image = left1;
+			}
+			
 		}
 		else if(direction == "right") {
-			image = right;
+			if(spriteNum == 1) {
+				image = right;
+			}
+			if (spriteNum == 2) {
+				image = right1;
+			}
 		}
 		g2.drawImage(image, screenX, screenY, gp.tileSize, gp.tileSize, null);
 	
