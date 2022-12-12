@@ -3,6 +3,7 @@ package main;
 import objects.OBJ_Chest;
 import objects.OBJ_Door;
 import objects.OBJ_Key;
+import objects.OBJ_Tree;
 
 public class AssetSetter {
 	GamePanel gp;
@@ -31,5 +32,11 @@ public class AssetSetter {
 		gp.obj[4] = new OBJ_Door();
 		gp.obj[4].worldX = 11*gp.tileSize;
 		gp.obj[4].worldY = 11*gp.tileSize;
+	
+		gp.obj[5] = new OBJ_Tree();
+		gp.obj[5].worldX = 1*gp.tileSize;
+		gp.obj[5].worldY = 1*gp.tileSize;
+		
+		
 	}
 }

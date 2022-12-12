@@ -20,6 +20,7 @@ public class Player extends Entity{
 	
 	public final int screenX;
 	public final int screenY;
+	int hasChest = 0;
 	
 	public Player (GamePanel gp, KeyHandler keyH) {
 		this.gp = gp;
@@ -31,6 +32,10 @@ public class Player extends Entity{
 		solidArea = new Rectangle();
 		solidArea.x = gp.tileSize/2;
 		solidArea.y = gp.tileSize;
+		
+		solidAreaDefaultX = solidArea.x;
+		solidAreaDefaultY = solidArea.y;
+		
 		solidArea.width = gp.tileSize;
 		solidArea.height = gp.tileSize;
 		
@@ -62,10 +67,6 @@ public class Player extends Entity{
 	}
 	
 	public void update() {
-		
-		collisionOn = false;
-		gp.colCheck.checkTile(this);
-		
 		if(keyH.upPressed == true && keyH.rightPressed == true) {
 			direction = "right";
 			if (collisionOn == false) {
@@ -128,6 +129,14 @@ public class Player extends Entity{
 			spriteCounter++;
 		}
 		
+		//check tile collision
+		collisionOn = false;
+		gp.colCheck.checkTile(this);
+				
+		//check object collisiion
+		int objIndex = gp.colCheck.checkObject(this, true);
+		pickUpObject(objIndex);
+		
 		if(spriteCounter > 10) {
 			if(spriteNum == 1) {
 				spriteNum = 2;
@@ -136,6 +145,25 @@ public class Player extends Entity{
 				spriteNum = 1;
 			}
 			spriteCounter = 0;
+		}
+		
+		
+	}
+	
+	public void pickUpObject(int i) {
+		if(i != 999) {
+			String objectName =  gp.obj[i].name;
+			
+			switch(objectName) {
+			case "Chest":
+				//do something
+				gp.obj[i] = null;
+				break;
+			case "Sate":
+				//increasing health bar
+				gp.obj[i] = null;
+				break;
+			}
 		}
 	}
 	
