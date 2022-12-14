@@ -2,7 +2,9 @@ package main;
 
 import objects.OBJ_Chest;
 import objects.OBJ_Door;
+import objects.OBJ_Grave;
 import objects.OBJ_Key;
+import objects.OBJ_Sate;
 import objects.OBJ_Tree;
 
 public class AssetSetter {
@@ -34,8 +36,16 @@ public class AssetSetter {
 		gp.obj[4].worldY = 11*gp.tileSize;
 	
 		gp.obj[5] = new OBJ_Tree();
-		gp.obj[5].worldX = 1*gp.tileSize;
-		gp.obj[5].worldY = 1*gp.tileSize;
+		gp.obj[5].worldX = 20*gp.tileSize;
+		gp.obj[5].worldY = 25*gp.tileSize;
+		
+		gp.obj[6] = new OBJ_Grave();
+		gp.obj[6].worldX = 27*gp.tileSize;
+		gp.obj[6].worldY = 25*gp.tileSize;
+		
+		gp.obj[7] = new OBJ_Sate();
+		gp.obj[7].worldX = 30*gp.tileSize;
+		gp.obj[7].worldY = 30*gp.tileSize;
 		
 		
 	}

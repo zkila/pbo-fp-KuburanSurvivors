@@ -156,11 +156,13 @@ public class Player extends Entity{
 			
 			switch(objectName) {
 			case "Chest":
-				//do something
+			 	//do something
+				gp.playSE(1);
 				gp.obj[i] = null;
 				break;
 			case "Sate":
 				//increasing health bar
+				gp.playSE(1);
 				gp.obj[i] = null;
 				break;
 			}

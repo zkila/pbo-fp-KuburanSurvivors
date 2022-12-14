@@ -14,7 +14,6 @@ import tile.TileManager;
 public class GamePanel extends JPanel implements Runnable {
 	
 	//screen setting
-	
 	final int originalTileSize = 16; // 16 x 16 px tiles
 	final int scale = 4;
 	
@@ -33,11 +32,15 @@ public class GamePanel extends JPanel implements Runnable {
 	//FPS
 	int FPS = 60;
 	
+	//system
 	TileManager tileM = new TileManager(this);
 	KeyHandler keyH = new KeyHandler();
-	Thread gameThread;
+	Sound sound = new Sound();
 	public CollisionChecker colCheck = new CollisionChecker(this);
 	public AssetSetter aSetter = new AssetSetter(this); 
+	Thread gameThread;
+	
+	//entity and object
 	public Player player = new Player(this, keyH);
 	public SuperObject obj[]= new SuperObject[10];
 
@@ -51,6 +54,7 @@ public class GamePanel extends JPanel implements Runnable {
 	
 	public void setupGame() {
 		aSetter.setObject();
+		playSound(0); 
 	}
 	
 	public void startGameThread() {
@@ -151,5 +155,21 @@ public class GamePanel extends JPanel implements Runnable {
 		player.draw(g2);
 		
 		g2.dispose();
+	}
+	
+	public void playSound(int i) {
+		
+		sound.setFile(i);
+		sound.play();
+		sound.loop();
+	}
+	
+	public void stopSound() {
+		sound.stop();
+	}
+	
+	public void playSE(int i) {
+		sound.setFile(i);
+		sound.play();
 	}
 }

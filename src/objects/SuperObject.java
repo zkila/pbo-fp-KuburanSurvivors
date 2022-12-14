@@ -28,9 +28,9 @@ public class SuperObject {
 				
 				g2.setColor(Color.WHITE);
 				g2.fillRect(screenX, screenY, gp.tileSize, gp.tileSize);
-				if (name == "Tree") {
+				if (name == "Tree" || name == "Grave") {
 					
-					g2.drawImage(image, screenX, screenY, gp.tileSize*4, gp.tileSize*4, null);
+					g2.drawImage(image, screenX, screenY, gp.tileSize*2, gp.tileSize*2, null);
 				}
 				else {
 					g2.drawImage(image, screenX, screenY, gp.tileSize, gp.tileSize, null);

@@ -84,6 +84,8 @@ public class CollisionChecker {
 						if(player == true) {
 							index = i;
 						}
+						System.out.println(gp.obj[i].solidArea.x + " " + gp.obj[i].solidArea.y + " " + gp.obj[i].worldX + " " + gp.obj[i].worldY);
+						
 					}
 					break;
 				case "down":
