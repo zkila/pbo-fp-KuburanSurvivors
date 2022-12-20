@@ -4,11 +4,14 @@ import java.awt.Rectangle;
 import java.awt.image.BufferedImage;
 import java.util.ArrayList;
 
+import main.GamePanel;
+
 public class Entity {
+	
+	GamePanel gp;
 	public int worldX, worldY;
 	public int speed;
 	
-//	public BufferedImage left, left1, right, right1;
 	public ArrayList<BufferedImage> sprite;
 	public String direction;
 	
@@ -18,5 +21,11 @@ public class Entity {
 	public int solidAreaDefaultX, solidAreaDefaultY;
 	public boolean collisionOn = false;
 	
+	//character status
+	public int maxLife;
+	public int life;
 	
+	public Entity (GamePanel gp) {
+		this.gp = gp;
+	}
 }

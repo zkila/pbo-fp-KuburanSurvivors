@@ -12,70 +12,23 @@ import javax.imageio.ImageIO;
 
 
 import main.GamePanel;
+import resource.Resource;
 
 public class TileManager {
 
 	GamePanel gp;
 	//public Tile[] tile;
-	public ArrayList<Tile> tile;
+	//public ArrayList<Tile> tile;
 	public int mapTileNum [][];
 	
 	public TileManager (GamePanel gp) {
 		this.gp = gp;
 		
-		tile = new ArrayList<>();
+		//tile = new ArrayList<>();
 		mapTileNum = new int[gp.maxWorldCol][gp.maxWorldRow];
 		
-		getTileImage ();
-		loadMap("/maps/world3.txt");
-	}
-	
-	public void getTileImage() {
-		
-		try {
-
-//			tile[0] = new Tile();
-//			tile[0].image = ImageIO.read(getClass().getResourceAsStream("/tiles/grass.png"));
-//			
-//			tile[1] = new Tile();
-//			tile[1].image = ImageIO.read(getClass().getResourceAsStream("/tiles/earth.png"));
-//			
-//			tile[2] = new Tile();
-//			tile[2].image = ImageIO.read(getClass().getResourceAsStream("/tiles/tree.png"));
-//			tile[2].collision = true;
-//			
-//			tile[3] = new Tile();
-//			tile[3].image = ImageIO.read(getClass().getResourceAsStream("/tiles/sand.png"));
-//			
-//			tile[4] = new Tile();
-//			tile[4].image = ImageIO.read(getClass().getResourceAsStream("/tiles/tiles_kuburan.png"));
-//			tile[4].collision = true;
-			
-			BufferedImage tileSheet = ImageIO.read(getClass().getResourceAsStream("/tiles/tilesset.png"));
-			tile.add(new Tile (tileSheet.getSubimage(0, 0, 32, 32), false));
-			tile.add(new Tile (tileSheet.getSubimage(32, 0, 32, 32), false));
-			tile.add(new Tile (tileSheet.getSubimage(64, 0, 32, 32), false));
-			tile.add(new Tile (tileSheet.getSubimage(0, 32, 32, 32), false));
-			tile.add(new Tile (tileSheet.getSubimage(32, 32, 32, 32), false));
-			tile.add(new Tile (tileSheet.getSubimage(64, 32, 32, 32), false));
-			tile.add(new Tile (tileSheet.getSubimage(0, 64, 32, 32), false));
-			tile.add(new Tile (tileSheet.getSubimage(32, 64, 32, 32), false));
-			tile.add(new Tile (tileSheet.getSubimage(64, 64, 32, 32), false));
-			
-			tile.add(new Tile (tileSheet.getSubimage(96, 0, 32, 32), false));
-			tile.add(new Tile (tileSheet.getSubimage(128, 0, 32, 32), false));
-			tile.add(new Tile (tileSheet.getSubimage(160, 0, 32, 32), false));
-			tile.add(new Tile (tileSheet.getSubimage(96, 32, 32, 32), false));
-			tile.add(new Tile (tileSheet.getSubimage(128, 32, 32, 32), false));
-			tile.add(new Tile (tileSheet.getSubimage(160, 32, 32, 32), false));
-			tile.add(new Tile (tileSheet.getSubimage(96, 64, 32, 32), false));
-			tile.add(new Tile (tileSheet.getSubimage(128, 64, 32, 32), false));
-			tile.add(new Tile (tileSheet.getSubimage(160, 64, 32, 32), false));
-			
-		}catch (IOException e){
-			e.printStackTrace();
-		}
-		
+		//getTileImage ();
+		loadMap("/maps/world.txt");
 	}
 	
 	public void loadMap(String fileMaps) {
@@ -128,7 +81,7 @@ public class TileManager {
 			   worldY + gp.tileSize > gp.player.worldY - gp.player.screenY &&
 			   worldY - gp.tileSize*2 < gp.player.worldY + gp.player.screenY) {
 				
-				g2.drawImage(tile.get(tileNum).image, screenX, screenY, gp.tileSize, gp.tileSize, null);
+				g2.drawImage(Resource.TILE.get(tileNum).image, screenX, screenY, gp.tileSize, gp.tileSize, null);
 			}
 
 			col++;
