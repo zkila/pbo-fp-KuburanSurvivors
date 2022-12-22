@@ -111,7 +111,7 @@ public class KeyHandler implements KeyListener{
 				gp.gameState = gp.pauseState;
 			}
 		}
-		if(gp.gameState == gp.pauseState) {
+		else if(gp.gameState == gp.pauseState) {
 			if(code == KeyEvent.VK_ESCAPE) {
 				gp.gameState = gp.playState;
 			}

@@ -8,6 +8,8 @@ public class ObjectData {
 	public int width;
 	public int height;
 	public Rectangle solidArea;
+	public int solidAreaDefaultX;
+	public int solidAreaDefaultY;
 	public boolean collision;
 	public String name;
 	
@@ -18,6 +20,8 @@ public class ObjectData {
 		this.name = name;
 		this.collision = collision;
 		this.solidArea = solidArea;
+		this.solidAreaDefaultX = solidArea.x;
+		this.solidAreaDefaultY = solidArea.y;
 	}
 	
 	public BufferedImage getImage() {

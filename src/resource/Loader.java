@@ -16,11 +16,14 @@ import tile.Tile;
 
 public class Loader {
 	 GamePanel gp;
+	 
+	public Loader (GamePanel gp) {
+		this.gp = gp;
+	}
 	public void load() {
 		
 		// GUI
 		try {
-
 			Resource.GUI.add(ImageIO.read(getClass().getResourceAsStream("/gui/background_mainmenu.png")));
 			Resource.GUI.add(ImageIO.read(getClass().getResourceAsStream("/gui/selectionscreen.png")));
 			Resource.GUI.add(ImageIO.read(getClass().getResourceAsStream("/gui/pauseng.png")));
@@ -62,25 +65,25 @@ public class Loader {
 			Resource.OBJECT.add(new ObjectData(ImageIO.read(getClass().getResourceAsStream("/objects/blank.png")), "blank", 1, 1, false, new Rectangle(0, 0, 64, 64)));
 			
 			BufferedImage gems = ImageIO.read(getClass().getResourceAsStream("/objects/gems.png"));
-			Resource.OBJECT.add(new ObjectData(gems.getSubimage(0, 0, 16, 16), "gems_1", 1, 1, true, new Rectangle(0, 0, 64, 64)));
-			Resource.OBJECT.add(new ObjectData(gems.getSubimage(16, 0, 16, 16), "gems_2", 1, 1, true, new Rectangle(0, 0, 64, 64)));
-			Resource.OBJECT.add(new ObjectData(gems.getSubimage(32, 0, 16, 16), "gems_10", 1, 1, true, new Rectangle(0, 0, 64, 64)));
-			Resource.OBJECT.add(new ObjectData(gems.getSubimage(48, 0, 16, 16), "gems_25", 1, 1, true, new Rectangle(0, 0, 64, 64)));
-			Resource.OBJECT.add(new ObjectData(gems.getSubimage(64, 0, 16, 16), "coin", 1, 1, true, new Rectangle(0, 0, 64, 64)));
+			Resource.OBJECT.add(new ObjectData(gems.getSubimage(0, 0, 16, 16), "gems_1", 1, 1, true, new Rectangle(3*gp.scale, 2*gp.scale, 9*gp.scale, 12*gp.scale)));
+			Resource.OBJECT.add(new ObjectData(gems.getSubimage(16, 0, 16, 16), "gems_2", 1, 1, true, new Rectangle(2*gp.scale, 2*gp.scale, 11*gp.scale, 12*gp.scale)));
+			Resource.OBJECT.add(new ObjectData(gems.getSubimage(32, 0, 16, 16), "gems_10", 1, 1, true, new Rectangle(4*gp.scale, 1*gp.scale, 8*gp.scale, 14*gp.scale)));
+			Resource.OBJECT.add(new ObjectData(gems.getSubimage(48, 0, 16, 16), "gems_25", 1, 1, true, new Rectangle(2*gp.scale, 2*gp.scale, 11*gp.scale, 12*gp.scale)));
+			Resource.OBJECT.add(new ObjectData(gems.getSubimage(64, 0, 16, 16), "coin", 1, 1, true, new Rectangle(2*gp.scale, 3*gp.scale, 11*gp.scale, 11*gp.scale)));
 			
 			
-			Resource.OBJECT.add(new ObjectData(ImageIO.read(getClass().getResourceAsStream("/objects/tree_1.png")), "tree_1", 3, 5, true, new Rectangle(64, 256, 64, 64)));
-			Resource.OBJECT.add(new ObjectData(ImageIO.read(getClass().getResourceAsStream("/objects/tree_2.png")), "tree_2", 6 , 7, true, new Rectangle(64, 256, 64, 64)));
-			Resource.OBJECT.add(new ObjectData(ImageIO.read(getClass().getResourceAsStream("/objects/tree_3.png")), "tree_3", 3, 5, true, new Rectangle(64, 256, 64, 64)));
+			Resource.OBJECT.add(new ObjectData(ImageIO.read(getClass().getResourceAsStream("/objects/tree_1.png")), "tree_1", 3, 5, true, new Rectangle(18*gp.scale, 67*gp.scale, 16*gp.scale, 13*gp.scale)));
+			Resource.OBJECT.add(new ObjectData(ImageIO.read(getClass().getResourceAsStream("/objects/tree_2.png")), "tree_2", 5 , 7, true, new Rectangle(19*gp.scale, 87*gp.scale, 46*gp.scale, 23*gp.scale)));
+			Resource.OBJECT.add(new ObjectData(ImageIO.read(getClass().getResourceAsStream("/objects/tree_3.png")), "tree_3", 3, 5, true, new Rectangle(16*gp.scale, 67*gp.scale, 16*gp.scale, 13*gp.scale)));
 
-			Resource.OBJECT.add(new ObjectData(ImageIO.read(getClass().getResourceAsStream("/objects/grave.png")), "grave", 2, 3, true, new Rectangle(0, 16, 96, 96)));
-			Resource.OBJECT.add(new ObjectData(ImageIO.read(getClass().getResourceAsStream("/objects/satay.png")), "satay", 2, 1, true, new Rectangle(0, 0, 64, 64)));
-			Resource.OBJECT.add(new ObjectData(ImageIO.read(getClass().getResourceAsStream("/objects/chest.png")), "chest", 1, 1, true, new Rectangle(0, 0, 64, 64)));
+			Resource.OBJECT.add(new ObjectData(ImageIO.read(getClass().getResourceAsStream("/objects/grave.png")), "grave", 2, 3, true, new Rectangle(2*gp.scale, 18*gp.scale, 29*gp.scale, 30*gp.scale)));
+			Resource.OBJECT.add(new ObjectData(ImageIO.read(getClass().getResourceAsStream("/objects/satay.png")), "satay", 2, 1, true, new Rectangle(5*2, 3, 52*2, 56)));
+			Resource.OBJECT.add(new ObjectData(ImageIO.read(getClass().getResourceAsStream("/objects/chest.png")), "chest", 1, 1, true, new Rectangle(1, 3, 62, 58)));
 			
-			Resource.OBJECT.add(new ObjectData(ImageIO.read(getClass().getResourceAsStream("/objects/fence.png")), "fence", 4, 3, true, new Rectangle(0, 128, 256, 64)));
-			Resource.OBJECT.add(new ObjectData(ImageIO.read(getClass().getResourceAsStream("/objects/fenceright.png")), "fence_r", 4, 3, true, new Rectangle(0, 128, 256, 64)));
-			Resource.OBJECT.add(new ObjectData(ImageIO.read(getClass().getResourceAsStream("/objects/fenceleft.png")), "fence_l", 4, 3, true, new Rectangle(0, 128, 256, 64)));
-			Resource.OBJECT.add(new ObjectData(ImageIO.read(getClass().getResourceAsStream("/objects/fencerl.png")), "fence_rl", 1, 1, true, new Rectangle(0, 0, 6, 16))); 
+			Resource.OBJECT.add(new ObjectData(ImageIO.read(getClass().getResourceAsStream("/objects/fence.png")), "fence", 4, 3, true, new Rectangle(0, 34*gp.scale, 64*gp.scale, 10*gp.scale)));
+			Resource.OBJECT.add(new ObjectData(ImageIO.read(getClass().getResourceAsStream("/objects/fenceright.png")), "fence_l", 4, 3, true, new Rectangle(0, 34*gp.scale, 64*gp.scale, 10*gp.scale)));
+			Resource.OBJECT.add(new ObjectData(ImageIO.read(getClass().getResourceAsStream("/objects/fenceleft.png")), "fence_r", 4, 3, true, new Rectangle(0, 34*gp.scale, 64*gp.scale, 10*gp.scale)));
+			Resource.OBJECT.add(new ObjectData(ImageIO.read(getClass().getResourceAsStream("/objects/fencerl.png")), "fence_rl", 1, 1, true, new Rectangle(0, 0, 5*gp.scale, 16*gp.scale))); 
 			
 		} catch (IOException e) {
 			System.out.println("[Loader] : Can't load objects / file not found");

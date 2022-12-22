@@ -77,9 +77,9 @@ public class TileManager {
 			int screenY = worldY - gp.player.worldY + gp.player.screenY;
 			
 			if(worldX + gp.tileSize > gp.player.worldX - gp.player.screenX &&
-			   worldX - gp.tileSize*2 < gp.player.worldX + gp.player.screenX &&
+			   worldX - gp.tileSize*3 < gp.player.worldX + gp.player.screenX &&
 			   worldY + gp.tileSize > gp.player.worldY - gp.player.screenY &&
-			   worldY - gp.tileSize*2 < gp.player.worldY + gp.player.screenY) {
+			   worldY - gp.tileSize*3 < gp.player.worldY + gp.player.screenY) {
 				
 				g2.drawImage(Resource.TILE.get(tileNum).image, screenX, screenY, gp.tileSize, gp.tileSize, null);
 			}

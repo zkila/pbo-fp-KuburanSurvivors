@@ -12,6 +12,7 @@ import javax.imageio.ImageIO;
 
 import main.GamePanel;
 import main.KeyHandler;
+import objects.ObjectManager;
 import resource.Resource;
 
 public class Player extends Entity{
@@ -31,8 +32,8 @@ public class Player extends Entity{
 		
 		this.keyH = keyH;
 		
-		screenX = gp.screenWidth / 2 - (gp.tileSize);
-		screenY = gp.screenHeight / 2 - (gp.tileSize);
+		screenX = gp.screenWidth / 2 - (gp.tileSize*3/2);
+		screenY = gp.screenHeight / 2 - (gp.tileSize*3/2);
 		
 		solidArea = new Rectangle();
 		solidArea.x = gp.tileSize - 16;
@@ -59,7 +60,7 @@ public class Player extends Entity{
 	}
 	
 
-	public void update() {
+	public void update(ObjectManager objectM) {
 		if(keyH.upPressed == true && keyH.rightPressed == true) {
 			direction = "right";
 			if (collisionOn == false) {
@@ -121,12 +122,12 @@ public class Player extends Entity{
 			}
 			spriteCounter++;
 		}
-		gp.objectM.checkObject(this, true);
-		//collisionOn = false;
+//		gp.objectM.checkObject(this, true, objectM);
+		collisionOn = false;
 		//gp.colCheck.checkObject(this);	
 		//check object collisiion
 		//int objIndex = 
-				//gp.colCheck.checkObject(this, true);
+		gp.colCheck.checkObject(this, true, objectM);
 		//pickUpObject(objIndex);
 		
 		if(spriteCounter > 10) {
@@ -168,8 +169,8 @@ public class Player extends Entity{
 	public void draw (Graphics2D g2) {
 //		g2.setColor(Color.white);
 //		g2.fillRect(screenX, screenY, gp.tileSize*2, gp.tileSize*2);
-		//g2.setColor(Color.red);
-		//g2.fillRect(screenX + solidArea.x, screenY + solidArea.y, solidArea.width, solidArea.height);
+		g2.setColor(Color.red);
+		g2.fillRect(screenX + solidArea.x, screenY + solidArea.y, solidArea.width, solidArea.height);
 		
 		//BufferedImage image = null;
 		

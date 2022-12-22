@@ -1,7 +1,9 @@
 package main;
 
 import entity.Entity;
+import objects.ObjectManager;
 import resource.Resource;
+import objects.Object;
 
 public class CollisionChecker {
 	
@@ -109,30 +111,36 @@ public class CollisionChecker {
 //	}
 //}
 	
-	public int checkObject (Entity entity, boolean player) {
+	public int checkObject (Entity entity, boolean player, ObjectManager objectM) {
 		
 		int index = 999;
 		
-		for (int i = 0; i < Resource.OBJECT.size(); i++) {
-			for (int j = 0; j < Resource.OBJECT.size(); j++) {
-			if(Resource.OBJECT.get(i) != null && Resource.OBJECT.indexOf(Resource.OBJECT.get(i)) != 0) {
+//		for (int i = 0; i < objectM.map_object.length; i++) {
+//			for (int j = 0; j < objectM.map_object[0].length; j++) {
+			for (int i = 0; i < objectM.mapObject.size(); i++) {
+				
+				if(objectM.mapObject.get(i) != null && objectM.mapObject.get(i).objectID != 0) {
+				
+				Object currObject = objectM.mapObject.get(i);
 				
 				//Get entity solid area position
 				entity.solidArea.x = entity.worldX + entity.solidArea.x;
 				entity.solidArea.y = entity.worldY + entity.solidArea.y;
 				
+				currObject.data.solidArea.x = currObject.worldX + currObject.data.solidArea.x;
+				currObject.data.solidArea.y = currObject.worldY + currObject.data.solidArea.y;
+				
 				//get the objects solid area position
 //				Resource.OBJECT.get(i).solidArea.x = Resource.OBJECT.get(i).worldX + Resource.OBJECT.get(i).solidArea.x;
 //				Resource.OBJECT.get(i).solidArea.y = Resource.OBJECT.get(i).worldY + Resource.OBJECT.get(i).solidArea.y;
 				
-				//Resource.OBJECT.get(i).solidArea.x = map_object.worldX + Resource.OBJECT.get(i).solidArea.x;
-			//	Resource.OBJECT.get(i).solidArea.y = Resource.OBJECT.get(i).worldY + Resource.OBJECT.get(i).solidArea.y;
+				
 				//System.out.println(Resource.OBJECT.get(i).solidArea.x + " " + Resource.OBJECT.get(i).solidArea.y + " " + Resource.OBJECT.get(i).worldX + " " + Resource.OBJECT.get(i).worldY);
 				switch(entity.direction) {
 				case "up":
 					entity.solidArea.y -= entity.speed;
-					if(entity.solidArea.intersects(Resource.OBJECT.get(i).solidArea)) {
-						if(Resource.OBJECT.get(i).collision == true) {
+					if(entity.solidArea.intersects(currObject.data.solidArea)) {
+						if(currObject.data.collision == true) {
 							entity.collisionOn = true;
 						}
 						if(player == true) {
@@ -144,8 +152,8 @@ public class CollisionChecker {
 					break;
 				case "down":
 					entity.solidArea.y += entity.speed;
-					if(entity.solidArea.intersects(Resource.OBJECT.get(i).solidArea)) {
-						if(Resource.OBJECT.get(i).collision == true) {
+					if(entity.solidArea.intersects(currObject.data.solidArea)) {
+						if(currObject.data.collision == true) {
 							entity.collisionOn = true;
 						}
 						if(player == true) {
@@ -155,8 +163,8 @@ public class CollisionChecker {
 					break;
 				case "left":
 					entity.solidArea.x -= entity.speed;
-					if(entity.solidArea.intersects(Resource.OBJECT.get(i).solidArea)) {
-						if(Resource.OBJECT.get(i).collision == true) {
+					if(entity.solidArea.intersects(currObject.data.solidArea)) {
+						if(currObject.data.collision == true) {
 							entity.collisionOn = true;
 						}
 						if(player == true) {
@@ -166,8 +174,8 @@ public class CollisionChecker {
 					break;
 				case "right":
 					entity.solidArea.x += entity.speed;
-					if(entity.solidArea.intersects(Resource.OBJECT.get(i).solidArea)) {
-						if(Resource.OBJECT.get(i).collision == true) {
+					if(entity.solidArea.intersects(currObject.data.solidArea)) {
+						if(currObject.data.collision == true) {
 							entity.collisionOn = true;
 						}
 						if(player == true) {
@@ -178,11 +186,15 @@ public class CollisionChecker {
 				}
 				entity.solidArea.x = entity.solidAreaDefaultX;
 				entity.solidArea.y = entity.solidAreaDefaultY;
+				
+				currObject.data.solidArea.x = currObject.data.solidAreaDefaultX;
+				currObject.data.solidArea.y = currObject.data.solidAreaDefaultY;
+				
 			//	Resource.OBJECT.get(i).solidArea.x = Resource.OBJECT.get(i).solidAreaDefaultX;
 			//	Resource.OBJECT.get(i).solidArea.y = Resource.OBJECT.get(i).solidAreaDefaultY;
 			}
 			}
-		}
+//		}
 		
 		return index;
 	}

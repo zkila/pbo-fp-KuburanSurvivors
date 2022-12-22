@@ -16,11 +16,11 @@ import tile.TileManager;
 public class GamePanel extends JPanel implements Runnable {
 	
 	//load file
-	Loader loader = new Loader();
+	Loader loader = new Loader(this);
 	
 	//screen setting
 	final int originalTileSize = 16; // 16 x 16 px tiles
-	final int scale = 4;
+	public final int scale = 4;
 	
 	public final int tileSize = originalTileSize * scale; //64 x 64 px tiles
 	public final int maxScreenColumn = 16; //baris
@@ -42,9 +42,9 @@ public class GamePanel extends JPanel implements Runnable {
 	KeyHandler keyH = new KeyHandler(this);
 	Sound sound = new Sound();
 	Sound se = new Sound();
-	//public CollisionChecker colCheck = new CollisionChecker(this);
+	public CollisionChecker colCheck;
 	
-	public ObjectManager objectM = new ObjectManager(this);
+	public ObjectManager objectM;
 	//public AssetSetter aSetter = new AssetSetter(this); 
 	public UI ui = new UI(this);
 	Thread gameThread;
@@ -67,6 +67,8 @@ public class GamePanel extends JPanel implements Runnable {
 		this.addKeyListener(keyH);
 		this.setFocusable(true);
 		this.loader.load();
+		this.objectM = new ObjectManager(this);
+		this.colCheck = new CollisionChecker(this);
 	}
 	
 	public void setupGame() {
@@ -81,42 +83,7 @@ public class GamePanel extends JPanel implements Runnable {
 		gameThread.start();
 	}
 	
-	@Override
-//	public void run() {
-//		
-//		double drawInterval = 1000000000/FPS;
-//		double nextDrawTime = System.nanoTime() + drawInterval;
-//		
-//		while(gameThread != null) {
-//			  
-//			  long currentTime = System.nanoTime(); 
-//			  System.out.println("current time : " + currentTime);
-//			  
-//			  //1. Update : update informasi termasuk posisi dari character
-//			  update();
-//			  //2. Draw : draw the screen with the update information 
-//			  repaint();
-//			  
-//			  
-//			  try {
-//				  double remainingTime = nextDrawTime - System.nanoTime();
-//				  remainingTime /= 1000000;  
-//				  
-//				  if(remainingTime < 0) {
-//					  remainingTime = 0;    
-//				  }
-//				  
-//				  Thread.sleep((long)remainingTime);
-//				  
-//				  nextDrawTime += drawInterval;
-//			  } 
-//			  catch (InterruptedException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
-//		}
-//	}
-	
+	@Override	
 	public void run() {
 		
 		double drawInterval = 1000000000/FPS;
@@ -154,7 +121,7 @@ public class GamePanel extends JPanel implements Runnable {
 	
 	public void update() {
 		if(gameState == playState) {
-			player.update();
+			player.update(objectM);
 		}
 				
 		if(gameState == pauseState) {

@@ -2,10 +2,12 @@ package objects;
 
 import java.awt.Rectangle;
 
+import resource.Resource;
+
 public class Object {
 
 
-	byte objectID;
+	public byte objectID;
 	public int worldX;
 	public int worldY;
 	public int width;
@@ -14,17 +16,25 @@ public class Object {
 	public boolean collision;
 	public int solidAreaDefaultX = 0;
 	public int solidAreaDefaultY = 0;
+	public ObjectData data;
 	
 	
-	public Object(byte id, int worldX, int worldY, int width, int height, Rectangle solidArea,boolean collision) {
-		
+//	public Object(byte id, int worldX, int worldY, int width, int height, Rectangle solidArea,boolean collision) {
+//		
+//		this.objectID = id;
+//		this.worldX = worldX;
+//		this.worldY = worldY;
+//		this.width = width;
+//		this.height = height;
+//		this.solidArea = solidArea;
+//		this.collision = collision;
+//	}
+	
+	public Object(byte id, int worldX, int worldY) {
 		this.objectID = id;
 		this.worldX = worldX;
 		this.worldY = worldY;
-		this.width = width;
-		this.height = height;
-		this.solidArea = solidArea;
-		this.collision = collision;
+		this.data = Resource.OBJECT.get(id);
 	}
 	
 	public byte getID() {
