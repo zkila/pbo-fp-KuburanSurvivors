@@ -4,89 +4,88 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
+import java.util.List;
 
 import javax.swing.JPanel;
 
+import entity.Entity;
 import entity.Player;
-import objects.Object;
-import objects.ObjectManager;
-import resource.Loader;
+import resourceloader.loader;
 import tile.TileManager;
 
-public class GamePanel extends JPanel implements Runnable {
+@SuppressWarnings("serial")
+public class GamePanel extends JPanel implements Runnable{
 	
-	//load file
-	Loader loader = new Loader(this);
+	// screen settings
+	final int originalTileSize = 16; //16x16 tile size
+	public final int scale = 3;
 	
-	//screen setting
-	final int originalTileSize = 16; // 16 x 16 px tiles
-	public final int scale = 4;
+	public final int tileSize = originalTileSize * scale; // 48x48 tile
+	public final int maxScreenCol = 20;
+	public final int maxScreenRow = 16;
+	public final int screenWidth = tileSize * maxScreenCol; // 768px
+	public final int screenHeight = tileSize * maxScreenRow; // 576px
 	
-	public final int tileSize = originalTileSize * scale; //64 x 64 px tiles
-	public final int maxScreenColumn = 16; //baris
-	public final int maxScreenRow = 12; // kolom
-	public final int screenWidth = tileSize * maxScreenColumn; // 1024 px
-	public final int screenHeight = tileSize * maxScreenRow; // 768 px
+	public final int maxWorldCol = 250;
+	public final int maxWorldRow = 250;
+	public final int worldWidth = tileSize * maxScreenCol;
+	public final int worldHeigth = tileSize * maxScreenRow;
 	
-	//World Setting
-	public final int maxWorldCol = 50;
-	public final int maxWorldRow = 50;
-	public final int worldWidth = tileSize * maxWorldCol;
-	public final int worldHeight = tileSize * maxWorldRow;
+	int fps = 60;
 	
-	//FPS
-	int FPS = 60;
-	
-	//system
-	TileManager tileM = new TileManager(this);
-	KeyHandler keyH = new KeyHandler(this);
-	Sound sound = new Sound();
-	Sound se = new Sound();
-	public CollisionChecker colCheck;
-	
-	public ObjectManager objectM;
-	//public AssetSetter aSetter = new AssetSetter(this); 
-	public UI ui = new UI(this);
+	public KeyHandler keyH = new KeyHandler(this);
 	Thread gameThread;
-	
-	//entity and object
 	public Player player = new Player(this, keyH);
-	//public Object obj[]= new Object[10];
-
-	//Game State
-	public int gameState;
-	public final int titleState = 0;
-	public final int playState = 1;  
-	public final int pauseState = 2;
+	TileManager tileManager = new TileManager(this);
+	public CollisionChecker cChecker = new CollisionChecker(this);
 	
+	public ArrayList<Entity> obj = new ArrayList<Entity>();
+	public ArrayList<Entity> npc = new ArrayList<Entity>();
+	public ArrayList<Entity> mons = new ArrayList<Entity>();
+	
+	public ArrayList<Entity> entitylist = new ArrayList<>();
+	
+	public TileManager tilem = new TileManager(this);
+	public assetSetter setter = new assetSetter(this);
+	public Sound music = new Sound(), sfx = new Sound();
+	public UI ui = new UI(this);
+	public EventHandler ehandler = new EventHandler(this);
+	public loader loader = new loader(this,tilem);
+	
+	public boolean checkdrawtime = false;
+	
+	public int gamestate;
+	public final int titlestate = 0,  playstate = 1, pausestate = 2, dialoguestate = 3;
 	
 	public GamePanel() {
-		this.setPreferredSize(new Dimension(screenWidth,screenHeight));
+		this.setPreferredSize(new Dimension(screenWidth, screenHeight));
 		this.setBackground(Color.black);
 		this.setDoubleBuffered(true);
 		this.addKeyListener(keyH);
 		this.setFocusable(true);
-		this.loader.load();
-		this.objectM = new ObjectManager(this);
-		this.colCheck = new CollisionChecker(this);
 	}
-	
+
 	public void setupGame() {
-		//aSetter.setObject();
-		playSound(0); 
-		gameState = titleState;
+		loader.load();
+		setter.setobject();
+		setter.setnpc();
+		setter.setmons();
+		//playbgm(0);
+		gamestate = titlestate;
 	}
 	
 	public void startGameThread() {
-		
 		gameThread = new Thread(this);
 		gameThread.start();
 	}
 	
-	@Override	
-	public void run() {
+	
+public void run() {
 		
-		double drawInterval = 1000000000/FPS;
+		double drawInterval = 1000000000/fps;
 		double delta = 0;
 		long lastTime = System.nanoTime();
 		long currentTime;
@@ -111,7 +110,7 @@ public class GamePanel extends JPanel implements Runnable {
 			}
 			
 			if(timer >= 1000000000) {
-				//System.out.println("FPS : " + drawCounter);
+				System.out.println("FPS : " + drawCounter);
 				drawCounter = 0;
 				timer = 0;
 			}
@@ -120,63 +119,95 @@ public class GamePanel extends JPanel implements Runnable {
 	}
 	
 	public void update() {
-		if(gameState == playState) {
-			player.update(objectM);
+		if(gamestate == playstate) {
+			player.update();
+			
+			for(int i = 0;i < npc.size(); i++) {
+				if(npc.get(i) != null)
+					npc.get(i).update();
+			}
+			for(int i = 0;i < mons.size(); i++) {
+				if(mons.get(i) != null) {
+					if(mons.get(i).alive && !mons.get(i).dying) {
+						mons.get(i).update();
+					}
+					if(!mons.get(i).alive){
+						mons.remove(i);
+					}
+				}
+			}
 		}
-				
-		if(gameState == pauseState) {
-			//nothing happen
+		else if (gamestate == pausestate) {
+			
 		}
-		
-		
 	}
-	  
+	
 	public void paintComponent(Graphics g) {
 		super.paintComponent(g);
-		
 		Graphics2D g2 = (Graphics2D)g;
 		
-		//title screen
-		if(gameState == titleState) {
+		long drawstart = 0, drawend = 0, passed = 0;
+		
+		if(checkdrawtime) drawstart = System.nanoTime();
+		
+		if(gamestate == titlestate) {
 			ui.draw(g2);
 		}
+		
 		else {
-			//tile
-			tileM.draw(g2);
+			tileManager.draw(g2);
 			
-			//object
-			objectM.draw(g2);
+			entitylist.add(player);
 			
-//			for(int i = 0; i < obj.length ; i++ ) {
-//				if (obj[i] != null) {
-//					obj[i].draw(g2, this);
-//				}
-//			}
+			for(int i = 0; i<npc.size(); i++) {
+				if(npc.get(i)!=null) entitylist.add(npc.get(i));
+			}
 			
-			//player
-			player.draw(g2);
+			for(int i = 0; i<mons.size(); i++) {
+				if(mons.get(i)!=null) {
+					entitylist.add(mons.get(i));
+				}
+			}
 			
-			//UI
+			for(int i = 0; i<obj.size(); i++) {
+				if(obj.get(i)!=null) entitylist.add(obj.get(i));
+			}
+			
+			Collections.sort(entitylist, new Comparator<Entity>() {
+
+				public int compare(Entity e1, Entity e2) {
+					int result = Integer.compare(e1.worldY, e2.worldY);
+					return result;
+				}
+			});		
+			
+			for(int i = 0; i<entitylist.size(); i++) {
+				entitylist.get(i).draw(g2);
+			}
+			entitylist.clear();
 			ui.draw(g2);
 		}
-		
-		
+	
+		if (checkdrawtime) {
+			drawend = System.nanoTime();
+			passed = drawend - drawstart;
+			System.out.println("time passed = "+passed);
+		}
 		g2.dispose();
 	}
 	
-	public void playSound(int i) {
-		
-		sound.setFile(i);
-		sound.play();
-		sound.loop();
+	public void playbgm(int i) {
+		music.setFile(i);
+		music.play();
+		music.loop();
 	}
 	
-	public void stopSound() {
-		sound.stop();
+	public void stopbgm(int i) {
+		music.stop();
 	}
 	
-	public void playSE(int i) {
-		se.setFile(i);
-		se.play();
+	public void playsfx(int i) {
+		sfx.setFile(i);
+		sfx.play();
 	}
 }

@@ -1,55 +1,94 @@
 package main;
 
-//import objects.OBJ_Chest;
-//import objects.OBJ_Door;
-//import objects.OBJ_Grave;
-//import objects.OBJ_Key;
-//import objects.OBJ_Sate;
-//import objects.OBJ_Tree;
-//import objects.SuperObject;
+import entity.npc_oldman;
+import monster.mons_greenslime;
+import monster.mons_kuntilanak;
+import monster.mons_pocong;
+import object.obj_boots;
+import object.obj_chest;
+import object.obj_door;
+import object.obj_key;
 
-public class AssetSetter {
-//	GamePanel gp;
-//	
-//	public AssetSetter(GamePanel gp) {
-//		this.gp = gp;
-//	}
-//	
-//	public void setObject() {
-//		gp.obj[0] = new OBJ_Key();
-//		gp.obj[0].worldX = 0*gp.tileSize;
-//		gp.obj[0].worldY = 0*gp.tileSize;
+public class assetSetter {
+	
+	GamePanel gp;
+	
+	public assetSetter(GamePanel gp) {
+		this.gp = gp;
+		
+	}
+	
+	public void setobject () {
+//		gp.obj.add(new obj_key());
+//		gp.obj.get(0).worldX = 23 * gp.tileSize;
+//		gp.obj.get(0).worldY = 7 * gp.tileSize;
 //		
-//		gp.obj[1] = new OBJ_Key();
-//		gp.obj[1].worldX = 11*gp.tileSize;
-//		gp.obj[1].worldY = 10*gp.tileSize;
+//		gp.obj.add(new obj_key());
+//		gp.obj.get(1).worldX = 23 * gp.tileSize;
+//		gp.obj.get(1).worldY = 40 * gp.tileSize;
 //		
-//		gp.obj[2] = new OBJ_Chest();
-//		gp.obj[2].worldX = 12*gp.tileSize;
-//		gp.obj[2].worldY = 10*gp.tileSize;
+//		gp.obj.add(new obj_door());
+//		gp.obj.get(2).worldX = 12 * gp.tileSize;
+//		gp.obj.get(2).worldY = 22 * gp.tileSize;
 //		
-//		gp.obj[3] = new OBJ_Chest();
-//		gp.obj[3].worldX = 25*gp.tileSize;
-//		gp.obj[3].worldY = 22*gp.tileSize;
+//		gp.obj.add(new obj_door());
+//		gp.obj.get(3).worldX = 10 * gp.tileSize;
+//		gp.obj.get(3).worldY = 11 * gp.tileSize;
 //		
-//		gp.obj[4] = new OBJ_Door();
-//		gp.obj[4].worldX = 11*gp.tileSize;
-//		gp.obj[4].worldY = 11*gp.tileSize;
-//	
-//		gp.obj[5] = new OBJ_Tree();
-//		gp.obj[5].worldX = 20*gp.tileSize;
-//		gp.obj[5].worldY = 25*gp.tileSize;
+//		gp.obj.add(new obj_chest());
+//		gp.obj.get(4).worldX = 23 * gp.tileSize;
+//		gp.obj.get(4).worldY = 6 * gp.tileSize;
 //		
-//		gp.obj[6] = new OBJ_Grave();
-//		gp.obj[6].worldX = 27*gp.tileSize;
-//		gp.obj[6].worldY = 25*gp.tileSize;
+//		gp.obj.add(new obj_chest());
+//		gp.obj.get(5).worldX = 10 * gp.tileSize;
+//		gp.obj.get(5).worldY = 7 * gp.tileSize;
 //		
-//		gp.obj[7] = new OBJ_Sate();
-//		gp.obj[7].worldX = 30*gp.tileSize;
-//		gp.obj[7].worldY = 30*gp.tileSize;
+//		gp.obj.add(new obj_boots());
+//		gp.obj.get(6).worldX = 37 * gp.tileSize;
+//		gp.obj.get(6).worldY = 42 * gp.tileSize;
+		
+//		gp.obj.add(new obj_door(gp));
+//		gp.obj.get(0).worldX = 21 * gp.tileSize;
+//		gp.obj.get(0).worldY = 22 * gp.tileSize;
 //		
-//		gp.obj[8] = new SuperObject("grave.png", 20, 30);
+//		gp.obj.add(new obj_door(gp));
+//		gp.obj.get(1).worldX = 23 * gp.tileSize;
+//		gp.obj.get(1).worldY = 25 * gp.tileSize;
+	}
+	
+	public void setnpc() {
+		gp.npc.add(new npc_oldman(gp));
+		gp.npc.get(0).worldX = gp.tileSize * 21;
+		gp.npc.get(0).worldY = gp.tileSize * 21;
+	}
+	
+	public void setmons() {
+//		gp.mons.add(new mons_greenslime(gp));
+//		gp.mons.get(0).worldX = gp.tileSize * 23;
+//		gp.mons.get(0).worldY = gp.tileSize * 36;
 //		
-//		
-//	}
+//		gp.mons.add(new mons_greenslime(gp));
+//		gp.mons.get(1).worldX = gp.tileSize * 25;
+//		gp.mons.get(1).worldY = gp.tileSize * 35;
+		
+		gp.mons.add(new mons_kuntilanak(gp));
+		gp.mons.get(0).worldX = gp.tileSize * 23;
+		gp.mons.get(0).worldY = gp.tileSize * 36;
+		
+		gp.mons.add(new mons_kuntilanak(gp));
+		gp.mons.get(1).worldX = gp.tileSize * 25;
+		gp.mons.get(1).worldY = gp.tileSize * 35;
+		
+		gp.mons.add(new mons_pocong(gp));
+		gp.mons.get(2).worldX = gp.tileSize * 22;
+		gp.mons.get(2).worldY = gp.tileSize * 35;
+		
+		gp.mons.add(new mons_pocong(gp));
+		gp.mons.get(3).worldX = gp.tileSize * 20;
+		gp.mons.get(3).worldY = gp.tileSize * 35;
+		
+		gp.mons.add(new mons_pocong(gp));
+		gp.mons.get(4).worldX = gp.tileSize * 18;
+		gp.mons.get(4).worldY = gp.tileSize * 35;
+	}
 }
